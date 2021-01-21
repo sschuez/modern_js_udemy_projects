@@ -1,5 +1,3 @@
-console.log('Hello World');
-
 /* GAME FUNCTION:
 
 -Player must guess a number between a min and a max
@@ -12,7 +10,7 @@ console.log('Hello World');
 // Game values
 let min = 2,
 		max = 12,
-		winningNum = 2,
+		winningNum = getRandomNum(min, max),
 		guessesLeft = 3;
 
 // UI Elements
@@ -26,6 +24,13 @@ const game = document.querySelector('#game'),
 // Assign UI min and max
 minNum.textContent = min;
 maxNum.textContent = max;
+
+// Play again event listener
+game.addEventListener('mousedown', function(e){
+	if(e.target.className === 'play-again'){
+		window.location.reload();
+	}
+})
 
 // Listen for guess
 guessBtn.addEventListener('click', function(){
@@ -47,7 +52,7 @@ guessBtn.addEventListener('click', function(){
 		// // Set message
 		// setMessage(`${winningNum} is correct! YOU WIN!`, 'green');
 
-		gameOver(true, `${winningNum} is correct! YOU WIN!`)
+		gameOver(true, `${winningNum} is correct! YOU WIN!`);
 	} else {
 		// Wrong number
 		guessesLeft -= 1;
@@ -62,8 +67,7 @@ guessBtn.addEventListener('click', function(){
 			// guessInput.style.borderColor = 'red';
 			// // Set message
 			// setMessage(`Game Over, you lost. The correct number was ${winningNum}`, 'red');
-
-			gameOver(false, `Game Over, you lost. The correct number was ${winningNum}`, 'red')
+			gameOver(false, `Game Over, you lost. The correct number was ${winningNum}`);
 		} else {
 			// Game continues - answer wrong
 
@@ -83,15 +87,23 @@ function gameOver(won, msg){
 	let color;
 	won === true ? color = 'green' : color = 'red';
 
-
 	// Disable input
 	guessInput.disabled = true;
 	// Change border color
 	guessInput.style.borderColor = color;
 	// Change text color
-	guessInput.style.color = color;
+	message.style.color = color;
 	// Set message
 	setMessage(msg);
+
+	// Play again?
+	guessBtn.value = 'Play Again?';
+	guessBtn.className += 'play-again';
+}
+
+// Get Winning Number
+function getRandomNum(min, max){
+	return Math.floor(Math.random()*(max - min + 1) + min);
 }
 
 // Set message
