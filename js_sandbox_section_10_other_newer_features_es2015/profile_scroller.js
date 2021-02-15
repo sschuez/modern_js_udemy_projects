@@ -37,7 +37,6 @@ document.getElementById('next').addEventListener('click', nextProfile);
 function nextProfile() {
 	const currentProfile = profiles.next().value;
 
-
 	if(currentProfile !== undefined) {
 	document.getElementById('profileDisplay').innerHTML = `
 	<ul class="list-group">
